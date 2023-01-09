@@ -62,7 +62,7 @@ export class AppComponent implements OnInit {
   szvmform = this.fb.group(
     //объявление компонентов формы через формбилдер
     {
-      TipFormy: ['', Validators.required],
+      TipFormy: ['1', Validators.required],
       Strakhovatel: this.fb.group({
         RegNomer: [
           '',
@@ -80,7 +80,7 @@ export class AppComponent implements OnInit {
       }),
       OtchetnyjPeriod: this.fb.group({
         Mesyats: [
-          '',
+          '1',
           [Validators.required, Validators.min(1), Validators.max(12)],
         ],
         KalendarnyjGod: [
@@ -137,10 +137,10 @@ export class AppComponent implements OnInit {
     );
     this.szvmform.controls.SpisokZL.controls[0].controls.SNILS.setValue(
       '000-000-000 00'
-    );
+    ); */
     this.szvmform.controls.DataZapolneniya.setValue(
       formatDate(Date.now(), 'dd.MM.yyyy', 'en-US')
-    ); */
+    );
   }
 
   splitFIO(fio: string): {
