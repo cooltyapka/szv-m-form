@@ -142,6 +142,13 @@ export class AppComponent implements OnInit {
       formatDate(Date.now(), 'dd.MM.yyyy', 'en-US')
     );
   }
+  get RegNomer() {
+    return this.szvmform.controls.Strakhovatel.controls.RegNomer;
+  }
+
+  get SpisokZL() {
+    return this.szvmform.controls.SpisokZL;
+  }
 
   splitFIO(fio: string): {
     //разделение ФИО на отдельные свойства объекта
@@ -216,40 +223,50 @@ export class AppComponent implements OnInit {
   }
 
   focusRegNomer(component: EventTarget | null) {
-    let value = (component as HTMLInputElement).value.trim();
-    if (value.match(/^\d{3}-\d{3}-\d{6}$/)) {
-      (component as HTMLInputElement).value = value.replaceAll('-', '');
+    if (component) {
+      let value = (component as HTMLInputElement).value.trim();
+      if (value.match(/^\d{3}-\d{3}-\d{6}$/)) {
+        (component as HTMLInputElement).value = value.replaceAll('-', '');
+      }
     }
   }
 
   blurRegNomer(component: EventTarget | null) {
-    let value = (component as HTMLInputElement).value.trim();
-    if (value.match(/^\d{12}$/)) {
-      (component as HTMLInputElement).value =
-        value.slice(0, 3) + '-' + value.slice(3, 6) + '-' + value.slice(-6);
+    if (component) {
+      let value = (component as HTMLInputElement).value.trim();
+      if (value.match(/^\d{12}$/)) {
+        this.RegNomer.setValue(
+          `${value.slice(0, 3)}-${value.slice(3, 6)}-${value.slice(-6)}`
+        );
+      }
     }
   }
 
   focusSNILS(component: EventTarget | null) {
-    let value = (component as HTMLInputElement).value.trim();
-    if (value.match(/^\d{3}-\d{3}-\d{3}[ |-]\d{2}$/)) {
-      (component as HTMLInputElement).value = value
-        .replaceAll('-', '')
-        .replaceAll(' ', '');
+    if (component) {
+      let value = (component as HTMLInputElement).value.trim();
+      if (value.match(/^\d{3}-\d{3}-\d{3}[ |-]\d{2}$/)) {
+        (component as HTMLInputElement).value = value
+          .replaceAll('-', '')
+          .replaceAll(' ', '');
+      }
     }
   }
 
-  blurSNILS(component: EventTarget | null) {
-    let value = (component as HTMLInputElement).value.trim();
-    if (value.match(/^\d{11}$/)) {
-      (component as HTMLInputElement).value =
-        value.slice(0, 3) +
-        '-' +
-        value.slice(3, 6) +
-        '-' +
-        value.slice(6, 9) +
-        ' ' +
-        value.slice(-2);
+  blurSNILS(target: EventTarget | null) {
+    if (target) {
+      let component = target as HTMLInputElement;
+      let value = component.value.trim();
+      if (value.match(/^\d{11}$/)) {
+        this.SpisokZL.controls[
+          component.id.slice(5) as unknown as number
+        ].controls.SNILS.setValue(
+          `${value.slice(0, 3)}-${value.slice(3, 6)}-${value.slice(
+            6,
+            9
+          )} ${value.slice(-2)}`
+        );
+      }
     }
   }
 
