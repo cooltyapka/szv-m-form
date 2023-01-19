@@ -76,7 +76,7 @@ export class AppComponent implements OnInit {
           '',
           [Validators.required, Validators.pattern('^\\d{10}$|^\\d{12}$')],
         ],
-        KPP: ['', [Validators.required, Validators.pattern('^\\d{9}$')]],
+        KPP: ['', [Validators.pattern('^\\d{9}$')]],
       }),
       OtchetnyjPeriod: this.fb.group({
         Mesyats: [
